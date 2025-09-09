@@ -8,10 +8,10 @@ const flags = {
 };
 
 // 🔐 Challenge 1 - correct double Base64 encoded string
-// Step 1: CTF{encoding_flags} → Q1RGe2VuY29kaW5nX2ZsYWdzfQ==
-// Step 2: encode again → UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==
 const doubleEnc = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
-window.__ch1_doubleEnc = doubleEnc; // used in Challenge 1
+
+// 👇 Show it directly in the console (nothing else required from user)
+console.log(doubleEnc);
 
 // Challenge progression
 function checkFlag(num) {

@@ -4,11 +4,11 @@
 
 // Encoded flags (single Base64 per flag) - no plain "CTF{...}" visible as plain text
 const encFlags = {
-  1: "Q1RGe2VuY29kaW5nX2ZsYWdzfQ==", // CTF{encoding_flags}
-  2: "Q1RGe2NvbnNvbGVfcGxheX0=",     // CTF{console_play}
-  3: "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9", // CTF{password_encoded}
-  4: "Q1RGe2hpZGRlbl90ZXh0fQ==",     // CTF{hidden_text}
-  5: "Q1RGe3RhbXBlcl9oYXJkfQ=="      // CTF{tamper_hard}
+  1: "Q1RGe2VuY29kaW5nX2ZsYWdzfQ==", 
+  2: "Q1RGe2NvbnNvbGVfcGxheX0=",    
+  3: "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9", 
+  4: "Q1RGe2hpZGRlbl90ZXh0fQ==",   
+  5: "Q1RGe3RhbXBlcl9oYXJkfQ=="     
 };
 
 // helper to get decoded flag value
@@ -19,8 +19,8 @@ window.getFlag = function(n) {
 // CHALLENGE 1: double-encoded string printed directly to console on load
 (function(){
   // double-encode the single-base64 for flag 1 (so players must decode twice)
-  const single = encFlags[1];                  // Q1RGe2VuY29kaW5nX2ZsYWdzfQ==
-  const doubleEncoded = btoa(single);         // UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==
+  const single = encFlags[1];                  
+  const doubleEncoded = btoa(single);        
   // print exactly the blob requested (visible in console immediately)
   console.log(doubleEncoded);
 })();

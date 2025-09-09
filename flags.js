@@ -7,11 +7,11 @@ const flags = {
   5: "CTF{tamper_hard}"
 };
 
-// 🔐 Challenge 1 - double Base64 encoded string
-// CTF{encoding_flags} → Base64 → "Q1RGe2VuY29kaW5nX2ZsYWdzfQ=="
-// That result Base64-encoded again → "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ=="
+// 🔐 Challenge 1 - correct double Base64 encoded string
+// Step 1: CTF{encoding_flags} → Q1RGe2VuY29kaW5nX2ZsYWdzfQ==
+// Step 2: encode again → UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==
 const doubleEnc = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
-window.__ch1_doubleEnc = doubleEnc; // accessible for Challenge 1
+window.__ch1_doubleEnc = doubleEnc; // used in Challenge 1
 
 // Challenge progression
 function checkFlag(num) {

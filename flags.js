@@ -1,53 +1,46 @@
-// =========================
-// Flags.js for Challenges 1–5
-// =========================
-
-// Challenge answers (obfuscated to some extent)
+// Correct flag list
 const flags = [
   "CTF{encoding_flags}",  // Challenge 1
-  "CTF{second_flag}",     // Challenge 2
-  "CTF{third_flag}",      // Challenge 3
+  "CTF{console_play}",    // Challenge 2
+  "CTF{password_encoded}",// Challenge 3
   "CTF{hidden_text}",     // Challenge 4
-  "cwsmnl"                // Challenge 5
+  "CTF{tamper_hard}"      // Challenge 5
 ];
 
-// Challenge 1: Double-encoded string (Base64 twice)
-// Correct decoding -> "CTF{encoding_flags}"
-const challenge1DoubleEncoded = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
+// Show Challenge 1 encoded string (double encoded)
+console.log("Challenge 1 Encoded:", "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==");
 
-// Display Challenge 1’s encoded string in the console automatically
-console.log("Challenge 1 encoded string:", challenge1DoubleEncoded);
+// Show scrambled Challenge 2 flag
+console.log("Challenge 2 Scrambled:", [67,84,70,123,99,111,110,115,111,108,101,95,112,108,97,121,125]);
 
-// =========================
-// Flag Checking Logic
-// =========================
+// Generic flag checker
 function checkFlag(challenge, input) {
-  if (input === flags[challenge - 1]) {
-    alert("✅ Correct! Proceed to the next challenge.");
-    showNextChallenge(challenge);
+  const cleanedInput = input.trim();
+  const result = document.getElementById(`result${challenge}`);
+  if (cleanedInput === flags[challenge - 1]) {
+    result.innerText = "✅ Correct!";
+    const next = document.getElementById(`ch${challenge + 1}`);
+    if (next) next.style.display = "block";
   } else {
-    alert("❌ Incorrect flag. Try again!");
+    result.innerText = "❌ Incorrect flag. Try again!";
   }
 }
 
-// =========================
-// UI Control
-// =========================
-function showNextChallenge(current) {
-  const next = current + 1;
-  const currentEl = document.getElementById("challenge" + current);
-  const nextEl = document.getElementById("challenge" + next);
-
-  if (currentEl) currentEl.style.display = "none";
-  if (nextEl) nextEl.style.display = "block";
+// Password logic for Challenge 3
+function checkPwd() {
+  const input = document.getElementById("pwd").value.trim();
+  if (input === "cwsmnl") {
+    const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9"; // Base64
+    document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
+    document.getElementById("ch4").style.display = "block";
+  } else {
+    document.getElementById("pwdResult").innerText = "Wrong password!";
+  }
 }
 
-// =========================
-// Init: Show only Challenge 1
-// =========================
-window.onload = function () {
-  for (let i = 2; i <= 5; i++) {
-    const el = document.getElementById("challenge" + i);
-    if (el) el.style.display = "none";
-  }
-};
+// Reveal flag for Challenge 5
+function revealFlag() {
+  const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
+  let flag = String.fromCharCode(...hex);
+  document.getElementById("btnResult").innerText = "Flag: " + flag;
+}

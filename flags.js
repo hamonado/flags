@@ -1,10 +1,10 @@
 // Correct flag list
 const flags = [
-  "CTF{encoding_flags}",  // Challenge 1
-  "CTF{console_play}",    // Challenge 2
-  "CTF{password_encoded}",// Challenge 3
-  "CTF{hidden_text}",     // Challenge 4
-  "CTF{tamper_hard}"      // Challenge 5
+  "CTF{encoding_flags}",   // Challenge 1
+  "CTF{console_play}",     // Challenge 2
+  "CTF{password_encoded}", // Challenge 3
+  "CTF{hidden_text}",      // Challenge 4
+  "CTF{tamper_hard}"       // Challenge 5
 ];
 
 // Show Challenge 1 encoded string (double encoded)
@@ -19,6 +19,7 @@ function checkFlag(challenge, input) {
   const result = document.getElementById(`result${challenge}`);
   if (cleanedInput === flags[challenge - 1]) {
     result.innerText = "✅ Correct!";
+    // Show next challenge without any alert
     const next = document.getElementById(`ch${challenge + 1}`);
     if (next) next.style.display = "block";
   } else {

@@ -32,13 +32,9 @@
       border: 1px solid #333;
       border-radius: 10px;
     }
-    #ch1 {
-      display: block;
-    }
-    .hidden {
-      color: transparent;
-      user-select: none;
-    }
+    #ch1 { display: block; }
+    .hidden { color: transparent; user-select: none; }
+    pre { background:#0b0b0b; padding:8px; border-radius:6px; }
   </style>
 </head>
 <body>
@@ -48,11 +44,22 @@
   <!-- Challenge 1 -->
   <div id="ch1" class="challenge">
     <h2>Challenge 1: Double Encoded</h2>
-    <p>Decode this string until you get the flag, then submit it:</p>
-    <pre>UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==</pre>
+    <p>The encoded string is hidden (not shown on the page). Find it in the browser's developer tools, decode it until you get the flag, then submit it:</p>
     <input type="text" id="flag1" placeholder="Enter flag">
     <button onclick="checkFlag(1)">Submit</button>
     <p id="result1"></p>
+    <script>
+      // double-encoded flag (value split into parts so it's not trivially searchable visually)
+      (function(){
+        const p1 = "UVFWR2Uy"; 
+        const p2 = "VnVaMjlrdW5ZMmZabHdadmd9";
+        const doubleEnc = p1 + p2; // full double-base64 string
+        // not printed in page — only to console
+        console.log(doubleEnc);
+        // (optional) keep a variable for internal use if needed later
+        window.__ch1_doubleEnc = doubleEnc;
+      })();
+    </script>
   </div>
 
   <!-- Challenge 2 -->
@@ -64,7 +71,7 @@
     <p id="result2"></p>
     <script>
       const scrambled = [67,84,70,123,99,111,110,115,111,108,101,95,112,108,97,121,125];
-      console.log("Challenge 2 scrambled:", scrambled);
+      console.log(scrambled);
     </script>
   </div>
 
@@ -101,49 +108,47 @@
     <p id="result5"></p>
   </div>
 
-  <script>
-    // ✅ Correct flag list
-    const flags = {
-      1: "CTF{encoding_flags}",
-      2: "CTF{console_play}",
-      3: "CTF{password_encoded}",
-      4: "CTF{hidden_text}",
-      5: "CTF{tamper_hard}"
-    };
+<script>
+  // ✅ Correct flag list (kept encoded in other variants previously; plain here for verification)
+  const flags = {
+    1: "CTF{encoding_flags}",
+    2: "CTF{console_play}",
+    3: "CTF{password_encoded}",
+    4: "CTF{hidden_text}",
+    5: "CTF{tamper_hard}"
+  };
 
-    // Challenge progression
-    function checkFlag(num) {
-      const input = document.getElementById(`flag${num}`).value.trim();
-      const result = document.getElementById(`result${num}`);
-      if (input === flags[num]) {
-        result.innerText = "✅ Correct!";
-        const next = document.getElementById(`ch${num+1}`);
-        if (next) next.style.display = "block";
-      } else {
-        result.innerText = "❌ Try again!";
-      }
+  // Challenge progression
+  function checkFlag(num) {
+    const input = document.getElementById(`flag${num}`).value.trim();
+    const result = document.getElementById(`result${num}`);
+    if (input === flags[num]) {
+      result.innerText = "✅ Correct!";
+      const next = document.getElementById(`ch${num+1}`);
+      if (next) next.style.display = "block";
+    } else {
+      result.innerText = "❌ Try again!";
     }
+  }
 
-    // Password logic for Challenge 3
-    function checkPwd() {
-      const input = document.getElementById("pwd").value;
-      // obfuscated password "cwsmnl"
-      const realPwd = String.fromCharCode(99,119,115,109,110,108);
-      if (input === realPwd) {
-        const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9"; // Base64
-        document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
-      } else {
-        document.getElementById("pwdResult").innerText = "Wrong password!";
-      }
+  // Password check for Challenge 3 (obfuscated)
+  function checkPwd() {
+    const input = document.getElementById("pwd").value;
+    const realPwd = String.fromCharCode(99,119,115,109,110,108); // "cwsmnl"
+    if (input === realPwd) {
+      const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9";
+      document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
+    } else {
+      document.getElementById("pwdResult").innerText = "Wrong password!";
     }
+  }
 
-    // Reveal flag for Challenge 5
-    function revealFlag() {
-      const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
-      let flag = String.fromCharCode(...hex);
-      document.getElementById("btnResult").innerText = "Flag: " + flag;
-    }
-  </script>
-
+  // Reveal flag for Challenge 5
+  function revealFlag() {
+    const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
+    let flag = String.fromCharCode(...hex);
+    document.getElementById("btnResult").innerText = "Flag: " + flag;
+  }
+</script>
 </body>
 </html>

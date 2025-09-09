@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mini CTF Challenge</title>
+  <title>Progressive CTF Challenge</title>
   <style>
     body {
       font-family: monospace;
@@ -25,22 +25,31 @@
       background: #222;
       cursor: not-allowed;
     }
+    .challenge {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #333;
+      border-radius: 10px;
+    }
+    #ch1 {
+      display: block;
+    }
     .hidden {
       color: transparent;
       user-select: none;
     }
-    .challenge { display: none; }
-    #ch1 { display: block; }
   </style>
 </head>
 <body>
-  <h1>🚩 Capture The Flag (Progressive)</h1>
-  <p>Enter the correct flag in each challenge to unlock the next.</p>
+  <h1>🚩 Capture The Flag - Progressive Unlock</h1>
+  <p>Each challenge must be solved to reveal the next one.</p>
 
   <!-- Challenge 1 -->
   <div id="ch1" class="challenge">
-    <h2>Challenge 1: Encoded in Script</h2>
-    <p>Find and decode the text, then enter the flag here:</p>
+    <h2>Challenge 1: Double Encoded</h2>
+    <p>Decode this string until you get the flag, then submit it:</p>
+    <pre>UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==</pre>
     <input type="text" id="flag1" placeholder="Enter flag">
     <button onclick="checkFlag(1)">Submit</button>
     <p id="result1"></p>
@@ -48,29 +57,33 @@
 
   <!-- Challenge 2 -->
   <div id="ch2" class="challenge">
-    <h2>Challenge 2: Scrambled in Console</h2>
-    <p>Find the scrambled values, decode them, and enter the flag:</p>
+    <h2>Challenge 2: Console Scrambled</h2>
+    <p>Find the scrambled flag using DevTools console.</p>
     <input type="text" id="flag2" placeholder="Enter flag">
     <button onclick="checkFlag(2)">Submit</button>
     <p id="result2"></p>
+    <script>
+      const scrambled = [67,84,70,123,99,111,110,115,111,108,101,95,112,108,97,121,125];
+      console.log("Challenge 2 scrambled:", scrambled);
+    </script>
   </div>
 
   <!-- Challenge 3 -->
   <div id="ch3" class="challenge">
-    <h2>Challenge 3: Password Protected</h2>
-    <p>Enter the correct password to reveal the flag:</p>
-    <input type="text" id="pwd" placeholder="Enter password">
-    <button onclick="checkPwd()">Submit</button>
+    <h2>Challenge 3: Password Box</h2>
+    <p>Enter the correct password to reveal the flag.</p>
+    <input type="password" id="pwd" placeholder="Enter password">
+    <button onclick="checkPwd()">Submit Password</button>
     <p id="pwdResult"></p>
     <input type="text" id="flag3" placeholder="Enter flag">
-    <button onclick="checkFlag(3)">Submit</button>
+    <button onclick="checkFlag(3)">Submit Flag</button>
     <p id="result3"></p>
   </div>
 
   <!-- Challenge 4 -->
   <div id="ch4" class="challenge">
-    <h2>Challenge 4: Hidden in CSS</h2>
-    <p>Highlight the hidden text, decode it, then enter the flag:</p>
+    <h2>Challenge 4: Hidden Text</h2>
+    <p>Highlight the page carefully to uncover an encoded string.</p>
     <p class="hidden">Q1RGe2hpZGRlbl90ZXh0fQ==</p>
     <input type="text" id="flag4" placeholder="Enter flag">
     <button onclick="checkFlag(4)">Submit</button>
@@ -80,7 +93,7 @@
   <!-- Challenge 5 -->
   <div id="ch5" class="challenge">
     <h2>Challenge 5: Disabled Button</h2>
-    <p>Enable the button in DevTools to reveal the flag:</p>
+    <p>Enable this button with DevTools to reveal the flag.</p>
     <button id="btnFlag" disabled onclick="revealFlag()">Get Flag</button>
     <p id="btnResult"></p>
     <input type="text" id="flag5" placeholder="Enter flag">
@@ -88,7 +101,49 @@
     <p id="result5"></p>
   </div>
 
-  <!-- External JS -->
-  <script src="flags.js"></script>
+  <script>
+    // ✅ Correct flag list
+    const flags = {
+      1: "CTF{encoding_flags}",
+      2: "CTF{console_play}",
+      3: "CTF{password_encoded}",
+      4: "CTF{hidden_text}",
+      5: "CTF{tamper_hard}"
+    };
+
+    // Challenge progression
+    function checkFlag(num) {
+      const input = document.getElementById(`flag${num}`).value.trim();
+      const result = document.getElementById(`result${num}`);
+      if (input === flags[num]) {
+        result.innerText = "✅ Correct!";
+        const next = document.getElementById(`ch${num+1}`);
+        if (next) next.style.display = "block";
+      } else {
+        result.innerText = "❌ Try again!";
+      }
+    }
+
+    // Password logic for Challenge 3
+    function checkPwd() {
+      const input = document.getElementById("pwd").value;
+      // obfuscated password "cwsmnl"
+      const realPwd = String.fromCharCode(99,119,115,109,110,108);
+      if (input === realPwd) {
+        const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9"; // Base64
+        document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
+      } else {
+        document.getElementById("pwdResult").innerText = "Wrong password!";
+      }
+    }
+
+    // Reveal flag for Challenge 5
+    function revealFlag() {
+      const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
+      let flag = String.fromCharCode(...hex);
+      document.getElementById("btnResult").innerText = "Flag: " + flag;
+    }
+  </script>
+
 </body>
 </html>

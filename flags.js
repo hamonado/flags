@@ -54,14 +54,14 @@ window.checkFlag = function(num) {
   }
 };
 
-// Password check for Challenge 3 (obfuscated password "cwsmnl")
+// Password check for Challenge 3 (obfuscated password)
 window.checkPwd = function() {
   const pwdEl = document.getElementById('pwd');
   const pwdResult = document.getElementById('pwdResult');
   if (!pwdEl || !pwdResult) return;
 
   const user = pwdEl.value.trim();
-  const passArr = [99,119,115,109,110,108]; // ascii for 'cwsmnl'
+  const passArr = [99,119,115,109,110,108];
   const real = String.fromCharCode(...passArr);
 
   if (user === real) {

@@ -1,4 +1,4 @@
-// ✅ Correct flags
+// ✅ Correct flag list
 const flags = {
   1: "CTF{encoding_flags}",
   2: "CTF{console_play}",
@@ -7,19 +7,13 @@ const flags = {
   5: "CTF{tamper_hard}"
 };
 
-// 🔹 Challenge 1: log hidden encoded value
-(function(){
-  const part1 = "UVFWR2Uy";
-  const part2 = "VnVaMjlrdW5ZMmZabHdadmd9";
-  const doubleEnc = part1 + part2;
-  console.log("Challenge 1 encoded string:", doubleEnc);
-})();
+// 🔐 Challenge 1 - double Base64 encoded string
+// CTF{encoding_flags} → Base64 → "Q1RGe2VuY29kaW5nX2ZsYWdzfQ=="
+// That result Base64-encoded again → "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ=="
+const doubleEnc = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
+window.__ch1_doubleEnc = doubleEnc; // accessible for Challenge 1
 
-// 🔹 Challenge 2: scrambled
-const scrambled = [67,84,70,123,99,111,110,115,111,108,101,95,112,108,97,121,125];
-console.log("Challenge 2 scrambled array:", scrambled);
-
-// 🔹 Check flag
+// Challenge progression
 function checkFlag(num) {
   const input = document.getElementById(`flag${num}`).value.trim();
   const result = document.getElementById(`result${num}`);
@@ -32,11 +26,14 @@ function checkFlag(num) {
   }
 }
 
-// 🔹 Password logic (Challenge 3)
+// Password logic for Challenge 3
 function checkPwd() {
   const input = document.getElementById("pwd").value;
-  const realPwd = String.fromCharCode(99,119,115,109,110,108); // "cwsmnl"
-  if (input === realPwd) {
+  // obfuscated "cwsmnl"
+  const passArr = [99,119,115,109,110,108];
+  const password = String.fromCharCode(...passArr);
+
+  if (input === password) {
     const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9"; // Base64
     document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
   } else {
@@ -44,7 +41,7 @@ function checkPwd() {
   }
 }
 
-// 🔹 Challenge 5
+// Reveal flag for Challenge 5
 function revealFlag() {
   const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
   let flag = String.fromCharCode(...hex);

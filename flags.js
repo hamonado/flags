@@ -16,7 +16,7 @@ window.getFlag = function(n) {
   return atob(encFlags[n]);
 };
 
-// CHALLENGE 1: double-encoded string printed directly to console on load
+// CHALLENGE 1: 
 (function(){
   // double-encode the single-base64 for flag 1 (so players must decode twice)
   const single = encFlags[1];                  
@@ -28,6 +28,7 @@ window.getFlag = function(n) {
 // CHALLENGE 2: scrambled array logged to console on load
 (function(){
   const scrambled = [67,84,70,123,99,111,110,115,111,108,101,95,112,108,97,121,125];
+  console.log("Challenge 2");
   console.log(scrambled);
 })();
 
@@ -79,7 +80,7 @@ window.checkPwd = function() {
   }
 };
 
-// Challenge 5 reveal (enable button must be toggled via DevTools by user)
+// Challenge 5 reveal
 window.revealFlag = function() {
   const btnResult = document.getElementById('btnResult');
   if (!btnResult) return;

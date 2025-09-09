@@ -1,49 +1,53 @@
-// ✅ Correct flag list
-const flags = {
-  1: "CTF{encoding_flags}",
-  2: "CTF{console_play}",
-  3: "CTF{password_encoded}",
-  4: "CTF{hidden_text}",
-  5: "CTF{tamper_hard}"
+// =========================
+// Flags.js for Challenges 1–5
+// =========================
+
+// Challenge answers (obfuscated to some extent)
+const flags = [
+  "CTF{encoding_flags}",  // Challenge 1
+  "CTF{second_flag}",     // Challenge 2
+  "CTF{third_flag}",      // Challenge 3
+  "CTF{hidden_text}",     // Challenge 4
+  "cwsmnl"                // Challenge 5
+];
+
+// Challenge 1: Double-encoded string (Base64 twice)
+// Correct decoding -> "CTF{encoding_flags}"
+const challenge1DoubleEncoded = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
+
+// Display Challenge 1’s encoded string in the console automatically
+console.log("Challenge 1 encoded string:", challenge1DoubleEncoded);
+
+// =========================
+// Flag Checking Logic
+// =========================
+function checkFlag(challenge, input) {
+  if (input === flags[challenge - 1]) {
+    alert("✅ Correct! Proceed to the next challenge.");
+    showNextChallenge(challenge);
+  } else {
+    alert("❌ Incorrect flag. Try again!");
+  }
+}
+
+// =========================
+// UI Control
+// =========================
+function showNextChallenge(current) {
+  const next = current + 1;
+  const currentEl = document.getElementById("challenge" + current);
+  const nextEl = document.getElementById("challenge" + next);
+
+  if (currentEl) currentEl.style.display = "none";
+  if (nextEl) nextEl.style.display = "block";
+}
+
+// =========================
+// Init: Show only Challenge 1
+// =========================
+window.onload = function () {
+  for (let i = 2; i <= 5; i++) {
+    const el = document.getElementById("challenge" + i);
+    if (el) el.style.display = "none";
+  }
 };
-
-// 🔐 Challenge 1 - correct double Base64 encoded string
-const doubleEnc = "UTFSR2UyVnVZMjlrYVc1blgyWnNZV2R6ZlE9PQ==";
-
-// 👇 Show it directly in the console (nothing else required from user)
-console.log(doubleEnc);
-
-// Challenge progression
-function checkFlag(num) {
-  const input = document.getElementById(`flag${num}`).value.trim();
-  const result = document.getElementById(`result${num}`);
-  if (input === flags[num]) {
-    result.innerText = "✅ Correct!";
-    const next = document.getElementById(`ch${num+1}`);
-    if (next) next.style.display = "block";
-  } else {
-    result.innerText = "❌ Try again!";
-  }
-}
-
-// Password logic for Challenge 3
-function checkPwd() {
-  const input = document.getElementById("pwd").value;
-  // obfuscated "cwsmnl"
-  const passArr = [99,119,115,109,110,108];
-  const password = String.fromCharCode(...passArr);
-
-  if (input === password) {
-    const enc3 = "Q1RGe3Bhc3N3b3JkX2VuY29kZWR9"; // Base64
-    document.getElementById("pwdResult").innerText = "Flag: " + atob(enc3);
-  } else {
-    document.getElementById("pwdResult").innerText = "Wrong password!";
-  }
-}
-
-// Reveal flag for Challenge 5
-function revealFlag() {
-  const hex = [0x43,0x54,0x46,0x7b,0x74,0x61,0x6d,0x70,0x65,0x72,0x5f,0x68,0x61,0x72,0x64,0x7d];
-  let flag = String.fromCharCode(...hex);
-  document.getElementById("btnResult").innerText = "Flag: " + flag;
-}

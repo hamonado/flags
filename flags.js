@@ -7,7 +7,7 @@ const flags = {
   5: "CTF{tamper_hard}"
 };
 
-// Challenge progression
+// Progressive flow
 window.checkFlag = function(num) {
   const input = document.getElementById(`flag${num}`).value.trim();
   const result = document.getElementById(`result${num}`);
@@ -24,8 +24,7 @@ window.checkFlag = function(num) {
 // Password logic for Challenge 3
 window.checkPwd = function() {
   const input = document.getElementById("pwd").value;
-  // obfuscated password: cwsmnl
-  const encodedPwd = "Y3dzbW5s"; // base64 of cwsmnl
+  const encodedPwd = "Y3dzbW5s"; // base64 of "cwsmnl"
   const realPwd = atob(encodedPwd);
 
   if (input === realPwd) {

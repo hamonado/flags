@@ -22,7 +22,7 @@ window.getFlag = function(n) {
   const single = encFlags[1];                  
   const doubleEncoded = btoa(single);        
   // print exactly the blob requested (visible in console immediately)
-  console.log("Challenge 2");
+  console.log("Challenge 1");
   console.log(doubleEncoded);
 })();
 
